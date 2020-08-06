@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import { useSnackbar } from 'notistack'
 import styles from './SignIn.module.css'
 
 function Copyright() {
@@ -48,13 +49,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  
   const classes = useStyles();
 
   const { register, handleSubmit, errors   } = useForm()
 
   const onSubmit = (data) => {
     console.log(data)
+    enqueueSnackbar('Welcome!!!...', { 
+      variant: 'success',
+  });
   }
+
+  const { enqueueSnackbar } = useSnackbar();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -115,7 +122,7 @@ export default function SignIn() {
       <Box mt={8}>
         <Copyright />
       </Box>
-      { errors.password && <p>{errors.password.message}</p> }
+      { errors.password && enqueueSnackbar(errors.password.message, {variant: 'warning'}) }
     </Container>
   );
 }
